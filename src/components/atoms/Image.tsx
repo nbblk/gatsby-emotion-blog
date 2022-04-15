@@ -1,0 +1,1 @@
+const Img = () => <div><img></img></div>;

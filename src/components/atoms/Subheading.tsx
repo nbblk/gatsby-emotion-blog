@@ -1,0 +1,1 @@
+const SubHeading = () => <h3></h3>;

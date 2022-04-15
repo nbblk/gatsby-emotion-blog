@@ -1,0 +1,1 @@
+const Logo = () => <span><img alt="logo"></img></span>;

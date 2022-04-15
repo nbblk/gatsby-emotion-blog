@@ -1,0 +1,1 @@
+const Footer = () => <footer>footer</footer>;

@@ -1,0 +1,1 @@
+const HamburgerIcon = () => <span>icon</span>;

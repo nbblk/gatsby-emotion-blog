@@ -1,0 +1,1 @@
+const PostList = () => <main>posts</main>;
