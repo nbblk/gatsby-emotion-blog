@@ -1,1 +1,0 @@
-const Paragraph = () => <p></p>;

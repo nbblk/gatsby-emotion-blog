@@ -1,1 +1,0 @@
-const Link = () => <span><a>link</a></span>;
