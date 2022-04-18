@@ -2,18 +2,17 @@ import { CSSObject } from "@emotion/react";
 
 const footerStyles: CSSObject = {
   width: "100%",
-  height: "100px",
-  position: "fixed",
+  height: "50px",
   bottom: "0",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "var(--main)",
+  color: "var(--main)",
 };
 
 const Footer = () => (
   <footer css={footerStyles}>
-    <span>2022 blake sim</span>
+    <span>Ⓒ 2022 Blake Sim</span>
   </footer>
 );
 

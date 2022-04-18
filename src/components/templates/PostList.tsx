@@ -1,4 +1,5 @@
 import { CSSObject } from "@emotion/react";
+import { mq } from "../../styles/breakpoints";
 import Category from "../atoms/Category";
 import ListItem from "../molecules/ListItem";
 
@@ -30,8 +31,16 @@ const listStyles: CSSObject = {
     width: "100%",
     display: "flex",
     flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "left",
-    marginBottom: "30px"
+    marginBottom: "30px",
+  },
+  [mq[0]]: {
+    width: "100%",
+    "& > .categories": {
+      justifyContent: "center",
+      alignItems: "center",
+    },
   },
 };
 

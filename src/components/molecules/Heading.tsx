@@ -1,4 +1,5 @@
 import { CSSObject } from "@emotion/react";
+import { mq } from "../../styles/breakpoints";
 import Datetime from "../atoms/DateTime";
 
 type headingType = {
@@ -7,29 +8,27 @@ type headingType = {
 };
 
 const headingStyles: CSSObject = {
-  padding: "5px",
+  width: "50%",
+  marginBottom: "30px",
   display: "flex",
   justifyContent: "space-around",
   alignItems: "center",
-  borderTop: "1px solid var(--main)",
   cursor: "pointer",
-  "&:last-of-type": {
-      borderBottom: "1px solid var(--main)"
-  },
+  borderTop: "1px solid var(--main)",
+  borderBottom: "1px solid var(--main)",
   h1: {
+    margin: "20px 0",
     padding: 0,
     fontSize: "48px",
     textTransform: "uppercase",
   },
-  "&:hover": {
-    fontStyle: "italic",
-    color: "rgba(0, 0, 0, 0.7)",
-  }
+  [mq[0]]: {
+    width: "100%",
+  },
 };
 
 const Heading = (props: headingType) => (
   <div css={headingStyles}>
-    <Datetime value={props.datetime} />
     <h1>{props.text}</h1>
   </div>
 );
