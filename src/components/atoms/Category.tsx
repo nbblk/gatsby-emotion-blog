@@ -15,6 +15,7 @@ const Category = (props: categoryType) => {
     color: props.color,
     backgroundColor: props.color,
     [mq[0]]: {
+      padding: "10px 15px",
       margin: "5px",
     },
   };

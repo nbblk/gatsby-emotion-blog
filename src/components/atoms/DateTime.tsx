@@ -1,8 +1,9 @@
 import { CSSObject } from "@emotion/react";
 
 const datetimeStyle: CSSObject = {
+  margin: "15px",
   color: "var(--main)",
-  textTransform: "uppercase"
+  textTransform: "uppercase",
 };
 
 const Datetime = (props: { value: string }) => (

@@ -29,8 +29,8 @@ const Subheading = (props: subheadingType) => {
     <aside css={subheadingStyles}>
       <Datetime value={props.datetime} />
       <div>
-        {props.categories.map((category) => (
-          <Category value={category} color="" />
+        {props.categories.map((category, index) => (
+          <Category key={index} value={category} color="" />
         ))}
       </div>
     </aside>

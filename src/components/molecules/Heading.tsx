@@ -24,6 +24,7 @@ const headingStyles: CSSObject = {
   },
   [mq[0]]: {
     width: "100%",
+    textAlign: "center",
   },
 };
 

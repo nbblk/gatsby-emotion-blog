@@ -22,7 +22,6 @@ const Header = () => (
   <header css={headerStyle}>
     <HamburgerIcon />
     <Logo />
-    {/* <div id="mobileMenu">about</div> */}
     <Link to="/about">about</Link>
   </header>
 );

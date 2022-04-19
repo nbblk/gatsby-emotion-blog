@@ -30,6 +30,23 @@ const postStyles: CSSObject = {
     height: "150px",
     right: 0,
   },
+  "#goBack": {
+    width: "120px",
+    height: "120px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    border: "1px solid var(--main)",
+    borderRadius: "100%",
+  },
+  "#goBack > a": {
+    textDecoration: "none",
+    color: "var(--main)",
+    cursor: "pointer",
+  },
+  "#goBack > a:hover": {
+    color: "rgba(39, 27, 81, 0.7)",
+  },
   [mq[0]]: {
     padding: 0,
     "#contentWrapper": {
@@ -58,12 +75,12 @@ const Post = (props: postType) => (
         datetime={new Date().toDateString()}
       />
       <div>
-        {props.content.split("\n").map((paragraph) => (
-          <p>{paragraph}</p>
+        {props.content.split("\n").map((paragraph, index) => (
+          <p key={index}>{paragraph}</p>
         ))}
-        <span>
+        <div id="goBack">
           <Link to="/">Go back</Link>
-        </span>
+        </div>
       </div>
     </div>
   </article>
