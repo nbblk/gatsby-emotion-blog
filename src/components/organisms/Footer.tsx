@@ -13,7 +13,7 @@ const footerStyles: CSSObject = {
 
 const Footer = () => (
   <footer css={footerStyles}>
-    <span>Ⓒ 2022 Blake Sim</span>
+    <span>Ⓒ {new Date().getFullYear()} Blake Sim</span>
   </footer>
 );
 

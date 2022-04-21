@@ -1,9 +1,11 @@
 import { CSSObject } from "@emotion/react";
+import { Link } from "gatsby";
 import Datetime from "../atoms/DateTime";
 
 type itemType = {
   text: string;
   datetime: string;
+  url: string;
 };
 
 const itemStyles: CSSObject = {
@@ -29,17 +31,24 @@ const itemStyles: CSSObject = {
   "& > span": {
     width: "30%",
   },
-  "&:hover": {
+  "& > a": {
+    textDecoration: "none",
+  },
+  "& > a:hover": {
     fontStyle: "italic",
-    color: "var(--main)"
+    color: "var(--main)",
   },
 };
 
-const ListItem = (props: itemType) => (
-  <div css={itemStyles}>
-    <Datetime value={props.datetime} />
-    <h1>{props.text}</h1>
-  </div>
-);
+const ListItem = (props: itemType) => {
+  return (
+    <div css={itemStyles}>
+      <Datetime value={props.datetime} />
+      <Link to={"/" + props.url}>
+        <h1>{props.text}</h1>
+      </Link>
+    </div>
+  );
+};
 
 export default ListItem;

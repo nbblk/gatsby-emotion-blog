@@ -1,24 +1,10 @@
 import { CSSObject } from "@emotion/react";
+import { graphql, useStaticQuery } from "gatsby";
 import { mq } from "../../styles/breakpoints";
 import Category from "../atoms/Category";
 import ListItem from "../molecules/ListItem";
 
-const category = ["All posts", "thoughts", "technology", "arts"];
-
-const data = [
-  {
-    text: "first post",
-    datetime: "April 22 2022",
-  },
-  {
-    text: "second post",
-    datetime: "April 22 2022",
-  },
-  {
-    text: "third post",
-    datetime: "April 22 2022",
-  },
-];
+export const categories = ["All posts", "thoughts", "technology", "arts"];
 
 const listStyles: CSSObject = {
   width: "60%",
@@ -44,21 +30,47 @@ const listStyles: CSSObject = {
   },
 };
 
-const PostList = () => (
-  <section css={listStyles}>
-    <div className="categories">
-      {category.map((item, index) => (
-        <Category
-          key={item}
-          value={item}
-          color={index === 0 ? "var(--main)" : "transparent"}
+const PostList = () => {
+  const query = useStaticQuery(graphql`
+    query MdxListQuery {
+      allMdx {
+        edges {
+          node {
+            id
+            frontmatter {
+              title
+              date
+            }
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  const filterPost = () => {};
+
+  return (
+    <section css={listStyles}>
+      <div className="categories">
+        {categories.map((item, index) => (
+          <Category
+            key={item}
+            value={item}
+            color={index == 0 ? "var(--main)" : "transparent"}
+          />
+        ))}
+      </div>
+      {query.allMdx.edges.map((edge: any) => (
+        <ListItem
+          key={edge.node.id}
+          text={edge.node.frontmatter.title}
+          datetime={edge.node.frontmatter.date}
+          url={edge.node.slug}
         />
       ))}
-    </div>
-    {data.map((item) => (
-      <ListItem key={item.text} text={item.text} datetime={item.datetime} />
-    ))}
-  </section>
-);
+    </section>
+  );
+};
 
 export default PostList;

@@ -1,8 +1,10 @@
 import { CSSObject } from "@emotion/react";
-import { Link } from "gatsby";
+import { graphql, Link, useStaticQuery } from "gatsby";
 import { mq } from "../../styles/breakpoints";
+import Layout from "../Layout";
 import Heading from "./Heading";
 import Subheading from "./Subheading";
+import { MDXRenderer } from "gatsby-plugin-mdx";
 
 type postType = {
   subject: string;
@@ -57,33 +59,46 @@ const postStyles: CSSObject = {
   },
 };
 
+const query = useStaticQuery(graphql`
+  {
+    mdx(id: {}) {
+      frontmatter {
+        title
+        date
+      }
+      id
+      body
+    }
+  }
+`);
+console.log(query);
+
 const Post = (props: postType) => (
-  <article css={postStyles}>
-    <Heading text={props.subject} datetime={props.datetime} />
-    {/* <img src={props.imgUrl} width="40%"></img> */}
-    <div
-      id="contentWrapper"
-      css={{
-        position: "relative",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start",
-      }}
-    >
-      <Subheading
-        categories={["thoughts"]}
-        datetime={new Date().toDateString()}
-      />
-      <div>
-        {props.content.split("\n").map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
-        <div id="goBack">
-          <Link to="/">Go back</Link>
+  <Layout>
+    <article css={postStyles}>
+      <Heading text={props.subject} datetime={props.datetime} />
+      <div
+        id="contentWrapper"
+        css={{
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-start",
+        }}
+      >
+        <Subheading
+          categories={["thoughts"]}
+          datetime={new Date().toDateString()}
+        />
+        <div>
+          <MDXRenderer>{query.mdx.body}</MDXRenderer>
+          <div id="goBack">
+            <Link to="/">Go back</Link>
+          </div>
         </div>
       </div>
-    </div>
-  </article>
+    </article>
+  </Layout>
 );
 
 export default Post;

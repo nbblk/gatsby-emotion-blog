@@ -12,7 +12,7 @@ const Category = (props: categoryType) => {
     marginRight: "5px",
     border: "1px solid var(--main)",
     borderRadius: "100px",
-    color: props.color,
+    color: props.color === "transparent" ? "var(--main)" : "#ffffff",
     backgroundColor: props.color,
     [mq[0]]: {
       padding: "10px 15px",
