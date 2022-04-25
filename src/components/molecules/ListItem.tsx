@@ -1,5 +1,6 @@
 import { CSSObject } from "@emotion/react";
 import { Link } from "gatsby";
+import { mq } from "../../styles/breakpoints";
 import Datetime from "../atoms/DateTime";
 
 type itemType = {
@@ -19,14 +20,14 @@ const itemStyles: CSSObject = {
   "&:last-of-type": {
     borderBottom: "1px solid var(--main)",
   },
-  color: "RGB(39, 28, 82, 0.8)",
   h1: {
-    width: "70%",
+    width: "100%",
     margin: 0,
     fontSize: "48px",
     fontWeight: "400",
     textAlign: "left",
     textTransform: "uppercase",
+    color: "rgba(39, 28, 82, 0.8)",
   },
   "& > span": {
     width: "30%",
@@ -36,7 +37,12 @@ const itemStyles: CSSObject = {
   },
   "& > a:hover": {
     fontStyle: "italic",
-    color: "var(--main)",
+    "& > h1": { color: "var(--main)" },
+  },
+  [mq[0]]: {
+    h1: {
+      width: "100%",
+    },
   },
 };
 

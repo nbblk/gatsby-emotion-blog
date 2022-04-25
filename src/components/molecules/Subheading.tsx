@@ -30,7 +30,7 @@ const Subheading = (props: subheadingType) => {
       <Datetime value={props.datetime} />
       <div>
         {props.categories.map((category, index) => (
-          <Category key={index} value={category} color="" />
+          <Category key={index} value={category} />
         ))}
       </div>
     </aside>
