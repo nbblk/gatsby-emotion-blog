@@ -10,6 +10,9 @@ const wrapperStyles: CSSObject = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "flex-start",
+  img: {
+    display: "block",
+  },
   [mq[0]]: {
     flexDirection: "column-reverse",
     img: {
@@ -23,7 +26,7 @@ const IndexPage = () => {
     <Layout>
       <div css={wrapperStyles}>
         <PostList />
-        <img src="./main.jpg" width="700px"></img>
+        <img src="main.jpg" width="500px" height="800px"></img>
       </div>
     </Layout>
   );

@@ -1,8 +1,7 @@
 import { Link } from "gatsby";
-import { keyframes } from "@emotion/react";
 import { mq } from "../../styles/breakpoints";
-import HamburgerIcon from "../atoms/HamburgerIcon";
 import Logo from "../atoms/Logo";
+import "../templates/PostList";
 
 const headerStyle = {
   width: "100%",
@@ -21,7 +20,6 @@ const headerStyle = {
 
 const Header = () => (
   <header css={headerStyle}>
-    <HamburgerIcon />
     <Logo />
     <Link to="/about">about</Link>
   </header>
