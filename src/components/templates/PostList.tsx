@@ -1,11 +1,15 @@
 import { MouseEvent, useEffect, useState } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { CSSObject } from "@emotion/react";
 import { mq } from "../../styles/breakpoints";
 import Category from "../atoms/Category";
 import ListItem from "../molecules/ListItem";
 import { useMdxListQuery } from "../../hooks/use-all-mdx-list";
+import Button from "../atoms/Button";
 
-export const categories = ["all posts", "thoughts", "technology", "arts"];
+import "./listItem.css";
+
+export type categoryTypes = "all posts" | "thought" | "technology" | "arts";
 
 const listStyles: CSSObject = {
   width: "60%",
@@ -31,15 +35,23 @@ const listStyles: CSSObject = {
   },
 };
 
-export type categoryTypes = "all posts" | "thought" | "technology" | "arts";
-
 const PostList = () => {
+  const categories = ["all posts", "thoughts", "technology", "arts"];
+  const fullList: [] = useMdxListQuery();
+
   const [list, setList] = useState({
     items: [],
     filtered: [],
     filter: "all posts",
   });
-  const fullList = useMdxListQuery();
+
+  const [loadMore, setLoadMore] = useState(false);
+
+  const [hasMore, setHasMore] = useState(list.items.length > 10);
+
+  const handleLoadMore = () => {
+    setLoadMore(true);
+  };
 
   const clickFilter = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target instanceof HTMLElement) {
@@ -55,25 +67,56 @@ const PostList = () => {
     const found = list.items.filter(
       (edge: any) => edge.node.frontmatter.category === list.filter
     );
-    setList({ ...list, items: [...list.items], filtered: found });
+    return found;
   };
-
-  const items = (edge: any) => (
-    <ListItem
-      key={edge.node.id}
-      text={edge.node.frontmatter.title}
-      datetime={edge.node.frontmatter.date}
-      url={edge.node.slug}
-    />
-  );
 
   useEffect(() => {
     if (list.filter === "all posts") {
-      setList({ ...list, items: fullList });
+      setList({ ...list, items: [...fullList.slice(0, 10)] });
     } else {
-      filterPostsByCategory();
+      const found = filterPostsByCategory();
+      setList({ ...list, filtered: [...found.slice(0, 10)] });
     }
   }, [list.filter]);
+
+  useEffect(() => {
+    if (loadMore && hasMore) {
+      let items, currentLength, total;
+      if (list.filter === "all posts") {
+        items = list.items;
+        currentLength = items.length;
+        total = fullList;
+      } else {
+        items = list.filtered;
+        currentLength = items.length;
+        total = filterPostsByCategory();
+      }
+      const isMore = currentLength < total.length;
+      const nextResults = isMore
+        ? total.slice(currentLength, currentLength + 10)
+        : [];
+
+      list.filter === "all posts"
+        ? setList({ ...list, items: [...items, ...nextResults] })
+        : setList({ ...list, filtered: [...items, ...nextResults] });
+    }
+  }, [loadMore, hasMore]);
+
+  useEffect(() => {
+    const isMore = list.items.length < fullList.length;
+    setHasMore(isMore);
+  }, [list.items]);
+
+  const items = (edge: any) => (
+    <CSSTransition key={edge.node.id} timeout={500} classNames="listItem">
+      <ListItem
+        key={edge.node.id}
+        text={edge.node.frontmatter.title}
+        datetime={edge.node.frontmatter.date}
+        url={edge.node.slug}
+      />
+    </CSSTransition>
+  );
 
   return (
     <section css={listStyles}>
@@ -82,9 +125,26 @@ const PostList = () => {
           <Category key={index} value={item} click={clickFilter} />
         ))}
       </div>
-      {list.filter === "all posts"
-        ? list.items.map(items)
-        : list.filtered.map(items)}
+      <TransitionGroup component={null}>
+        {list.filter === "all posts"
+          ? list.items.map(items)
+          : list.filtered.map(items)}
+      </TransitionGroup>
+      {hasMore ? (
+        <Button
+          value={"LOAD MORE"}
+          color={"transparent"}
+          click={handleLoadMore}
+          style={{
+            margin: "1rem",
+            width: "200px",
+            "&:hover": { backgroundColor: "var(--main)", color: "white" },
+            [mq[0]]: { width: "100%" },
+          }}
+        />
+      ) : (
+        <p>- END -</p>
+      )}
     </section>
   );
 };
