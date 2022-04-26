@@ -3,6 +3,8 @@ import { CSSObject } from "@emotion/react";
 type buttonType = {
   value: string;
   color: string;
+  click?: () => void;
+  style?: CSSObject;
 };
 
 const Button = (props: buttonType) => {
@@ -12,9 +14,15 @@ const Button = (props: buttonType) => {
     borderRadius: "100px",
     color: "var(--main)",
     backgroundColor: `${props.color}`,
+    cursor: "pointer",
+    ...props.style,
   };
 
-  return <button css={buttonStyle}>{props.value}</button>;
+  return (
+    <button css={buttonStyle} onClick={props.click}>
+      {props.value}
+    </button>
+  );
 };
 
 export default Button;
