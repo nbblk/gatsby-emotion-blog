@@ -26,7 +26,7 @@ const IndexPage = () => {
     <Layout>
       <div css={wrapperStyles}>
         <PostList />
-        <img src="main.jpg" width="500px" height="800px"></img>
+        <img src="./main.jpg" width="500px" height="800px"></img>
       </div>
     </Layout>
   );
